@@ -1,5 +1,10 @@
 package com.rosamusic;
 
+// needed for a constructor im writing that converts from LocalDate to Date 
+// i didn't realized java had an inbuilt date class until i had already written this entire class
+// my fault
+import java.time.LocalDate;
+
 // Class that stores a date in MM DD YYYY format
 // used in the recordRelease class to store the release date of a release
 public class Date implements Comparable<Date>
@@ -86,6 +91,57 @@ public class Date implements Comparable<Date>
         month = 0;
         day = 0;
         year = 0;
+    }
+
+    // constructor with instance of LocalDate
+    // basically, i didn't realize LocalDate was a thing
+    // so I have to create a constructor that converts a LocalDate to an instance of the Date class 
+    // in order to use the datePicker widget
+    public Date(LocalDate ld)
+    {
+        // this type conversion is very sketch but whatever! 
+        day = (byte)ld.getDayOfMonth();
+        year = ld.getYear();
+
+        switch (ld.getMonth())
+        {
+            case JANUARY:
+                month = 1;
+                break;
+            case FEBRUARY:
+                month = 2;
+                break;
+            case MARCH:
+                month = 3;
+                break;
+            case APRIL:
+                month = 4;
+                break;
+            case MAY:
+                month = 5;
+                break;
+            case JUNE:
+                month = 6;
+                break;
+            case JULY:
+                month = 7;
+                break;
+            case AUGUST:
+                month = 8;
+                break;
+            case SEPTEMBER:
+                month = 9;
+                break;
+            case OCTOBER:
+                month = 10;
+                break;
+            case NOVEMBER:
+                month = 11;
+                break;
+            case DECEMBER:
+                month = 12;
+                break;
+        }
     }
 
     // used for printing this object 

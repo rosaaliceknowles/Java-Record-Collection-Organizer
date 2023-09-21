@@ -29,7 +29,7 @@ public class collectionContainer
      * 4 = digital
      * 5 = shellac 
      */
-    public static boolean[] genreSortList = {false,false,false,false,false,false};
+    public static boolean[] genreSortList = {true,true,true,true,true,true};
 
     // constructor only initializes objects, does not assign values 
     // tabula rasa
@@ -52,6 +52,25 @@ public class collectionContainer
     ArrayList<recordRelease> getCassette() {return cassette;}
     ArrayList<recordRelease> getDigital() {return digital;}
     ArrayList<recordRelease> getShellac() {return shellac;}
+
+    public void sort()
+    {
+        // sorts each list
+
+        recordRelease.sortByGenre = genreSortList[0];
+        Collections.sort(vinylLP);
+        recordRelease.sortByGenre = genreSortList[1];
+        Collections.sort(vinylEP);
+        recordRelease.sortByGenre = genreSortList[2];
+        Collections.sort(cd);
+        recordRelease.sortByGenre = genreSortList[3];
+        Collections.sort(cassette);
+        recordRelease.sortByGenre = genreSortList[4];
+        Collections.sort(digital);
+        recordRelease.sortByGenre = genreSortList[5];
+        Collections.sort(shellac);
+        
+    }
 
     // adds an item to the collection
     public void addItem(recordRelease x)
@@ -92,6 +111,89 @@ public class collectionContainer
                 Collections.sort(shellac);
                 break;
         }
+    }
+
+    public void removeItem(int idx)
+    {
+        recordRelease tempRR = fullCollection.get(idx);
+
+        fullCollection.remove(idx);
+
+        switch (tempRR.format)
+        {
+            case VINYL_LP:
+                for (int i = 0; i < vinylLP.size(); ++i)
+                {
+                    if (tempRR.createStringRep().equals(vinylLP.get(i).createStringRep()))
+                    {
+                        vinylLP.remove(i);
+                        break;
+                    }
+                }
+                break;
+            case VINYL_EP:
+                for (int i = 0; i < vinylEP.size(); ++i)
+                {
+                    if (tempRR.createStringRep().equals(vinylEP.get(i).createStringRep()))
+                    {
+                        vinylEP.remove(i);
+                        break;
+                    }
+                }
+                break;
+            case CD:
+                for (int i = 0; i < cd.size(); ++i)
+                {
+                    if (tempRR.createStringRep().equals(cd.get(i).createStringRep()))
+                    {
+                        cd.remove(i);
+                        break;
+                    }
+                }
+                break;
+            case CASSETTE:
+                for (int i = 0; i < cassette.size(); ++i)
+                {
+                    if (tempRR.createStringRep().equals(cassette.get(i).createStringRep()))
+                    {
+                        cassette.remove(i);
+                        break;
+                    }
+                }
+                break;
+            case DIGITAL:
+                for (int i = 0; i < digital.size(); ++i)
+                {
+                    if (tempRR.createStringRep().equals(digital.get(i).createStringRep()))
+                    {
+                        digital.remove(i);
+                        break;
+                    }
+                }
+                break;
+            case SHELLAC:
+                for (int i = 0; i < shellac.size(); ++i)
+                {
+                    if (tempRR.createStringRep().equals(shellac.get(i).createStringRep()))
+                    {
+                        shellac.remove(i);
+                        break;
+                    }
+                }
+                break;
+        }
+    }
+
+    public void sortFullCollection()
+    {
+        fullCollection.clear();
+
+        fullCollection.addAll(vinylLP);
+        fullCollection.addAll(vinylEP);
+        fullCollection.addAll(cd);
+        fullCollection.addAll(cassette);
+        fullCollection.addAll(digital);
+        fullCollection.addAll(shellac);
     }
 
     // NOTE
@@ -138,15 +240,7 @@ public class collectionContainer
             String temp = gson.toJson(genreSortList) + "\n";
 
             // save albums
-            
-            fullCollection.clear();
-
-            fullCollection.addAll(vinylLP);
-            fullCollection.addAll(vinylEP);
-            fullCollection.addAll(cd);
-            fullCollection.addAll(cassette);
-            fullCollection.addAll(digital);
-            fullCollection.addAll(shellac);
+            sortFullCollection();
 
             for (recordRelease rr : fullCollection)
             {
@@ -167,6 +261,14 @@ public class collectionContainer
     public void read(String filePath)
     {
         Gson gson = new GsonBuilder().create();
+
+        fullCollection.clear();
+        vinylLP.clear();
+        vinylEP.clear();
+        cd.clear();
+        cassette.clear();
+        digital.clear();
+        shellac.clear();
 
         try
         {

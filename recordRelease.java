@@ -94,7 +94,7 @@ public class recordRelease implements Comparable<recordRelease>
                 temp += "7\" Vinyl Record.";
                 break;
             case CD:
-                temp += "CD.\n";
+                temp += "CD.";
                 break;
             case CASSETTE:
                 temp += "Cassette Tape.";
@@ -107,6 +107,11 @@ public class recordRelease implements Comparable<recordRelease>
                 break;
         }
         return temp;
+    }
+
+    public recordReleaseStringRep createStringRep()
+    {
+        return new recordReleaseStringRep(this);
     }
 
     // print me! 
